@@ -36,7 +36,9 @@ if not os.environ.get("ANTHROPIC_API_KEY"):
 DEMO_MODE = not os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("DEMO_MODE") == "1"
 st.set_page_config(page_title="Document extraction", layout="wide")
 st.markdown(
-    "<style>.block-container{padding-top:2.5rem;max-width:1600px}</style>",
+    "<style>.block-container{padding-top:2.5rem;max-width:1600px}"
+    # On phones the columns stack, so keep the source preview short and the extracted data close.
+    "@media (max-width:640px){[data-testid=stLayoutWrapper]:has(>.st-key-source),.st-key-source{height:auto!important;max-height:45vh}}</style>",
     unsafe_allow_html=True,
 )
 
@@ -78,7 +80,8 @@ def show_source(name: str, data: bytes) -> None:
     elif Path(name).suffix.lower() in IMAGE_TYPES:
         st.image(data, width="stretch")
     else:
-        st.code(data.decode("utf-8", errors="replace"), language=None, wrap_lines=False)
+        # Pasted text is usually one long paragraph; files keep their line layout (tables in emails).
+        st.code(data.decode("utf-8", errors="replace"), language=None, wrap_lines=name == "pasted.txt")
 
 
 # --- Review ----------------------------------------------------------------
@@ -216,7 +219,7 @@ left, right = st.columns([4, 7], gap="large")
 with left:
     st.subheader("Source")
     st.caption(name)
-    with st.container(height=760, border=False):
+    with st.container(height=760, border=False, key="source"):
         show_source(name, data)
 
 with right:
