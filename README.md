@@ -91,14 +91,17 @@ with the unit tests.
 
 The same eval, one run per model, documents processed one at a time:
 
-| Model | Accuracy | Avg time / doc | Approx. cost / doc |
-|---|---|---|---|
-| `claude-opus-5-5` | 103/103 (100%) | 7.2 s | $0.029 |
-| `claude-sonnet-5-5` | 103/103 (100%) | 4.7 s | $0.014 |
-| `claude-haiku-5-5` | 103/103 (100%) | 6.5 s | $0.001 |
+| Model | Accuracy | Avg time / doc | Avg tokens in / out | Approx. cost / doc |
+|---|---|---|---|---|
+| `claude-opus-5-5` | 103/103 (100%) | 7.2 s | 3,439 / 784 | $0.0294 |
+| `claude-sonnet-5-5` | 103/103 (100%) | 4.7 s | 3,439 / 679 | $0.0137 |
+| `claude-haiku-5-5` | 103/103 (100%) | 6.5 s | 3,439 / 1,358 | $0.0010 |
 
-Cost is from the token counts each run reported, at standard API prices. To compare from
-the saved runs, use `python eval/run_eval.py --compare`.
+Cost = average tokens from the runs × published standard API prices per million tokens
+(input / output): Opus 5.5 $4 / $20, Sonnet 5.5 $2 / $10, Haiku 5.5 $0.10 / $0.50
+(Haiku's rate for prompts under 100K tokens; these are about 4K). Output tokens include the
+model's internal reasoning. To recompute from the saved runs, use
+`python eval/run_eval.py --compare`.
 
 What the table does and doesn't show:
 
@@ -109,15 +112,18 @@ What the table does and doesn't show:
   Haiku both explained the mismatch in their own words. Sonnet extracted the figures
   correctly but didn't mention it, and the code check caught it anyway. That's the reason
   the arithmetic check lives in code rather than in the prompt.
-- Haiku wrote longer responses than the other two (about 1,300 output tokens per document,
-  versus roughly 550–1,050), which is why it isn't the fastest despite being the smallest model.
+- Haiku produced about twice as many output tokens as the other two, which is why it isn't
+  the fastest despite being the smallest model. Its per-token price is low enough that it
+  is still about 13× cheaper than Sonnet and 29× cheaper than Opus.
 
-**Recommendation:** `claude-sonnet-5-5` as the default for this workload. It matched Opus
-on every field, was the fastest, and costs about half as much. Haiku is the choice for
-high-volume batch processing, where costing 14× less than Sonnet and 30× less than Opus matters more than the quality of the
-reviewer notes. Opus is worth keeping for the documents a reviewer flags as hard. The code
-currently defaults to Opus. Switch with `EXTRACTION_MODEL=claude-sonnet-5-5` in `.env`, or
-pass `--model` to the eval.
+**Recommendation:** `claude-haiku-5-5` as the default for this workload. On this eval it
+matched the larger models on every field and its notes to the reviewer were as useful as
+Opus's, at about a tenth of a cent per document. The trade-off is about two seconds more
+per document than Sonnet. Haiku also has no server-side refusal fallback, and eight
+documents is too few to rule out a gap on harder real-world paperwork. So choose Sonnet
+when response time matters most, and re-run the eval on the customer's own documents
+before committing. The code currently defaults to Opus. Switch with
+`EXTRACTION_MODEL=claude-haiku-5-5` in `.env`, or pass `--model` to the eval.
 
 ## Run it
 
