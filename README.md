@@ -181,3 +181,7 @@ scripts/              regenerate the samples and the screenshots (requirements-d
 ## How I built this
 
 <!-- Written by the author. -->
+
+## License
+
+MIT. See [LICENSE](LICENSE).
