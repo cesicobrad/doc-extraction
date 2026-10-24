@@ -180,7 +180,36 @@ scripts/              regenerate the samples and the screenshots (requirements-d
 
 ## How I built this
 
-<!-- Written by the author. -->
+Most of my client work is under NDA, so I built this as a public stand-in for the kind of
+automation I make for companies. It shows the approach, not the full product: real client
+projects are larger and shaped around one company's documents and systems.
+
+I build with AI coding agents. Claude Code wrote most of this code and the tests from my
+brief. My job is the part that decides whether a tool is useful: what it should do, how
+people will use it, what to check, and what to change after testing. For this demo that meant:
+
+- **A person approves every record.** The model proposes and the reviewer decides. I use
+  the same rule in client automation wherever money or customers are involved.
+- **The maths is checked in code, not by the model.** A wrong total on a supplier's invoice
+  should be caught even when the model copies it faithfully.
+- **Test cases from real inboxes.** A photographed invoice, a document with a deliberately
+  wrong total, and a Slovenian invoice, because those are what actually arrive.
+- **Cost, measured instead of assumed.** I had the eval run on three models. Haiku matched
+  Opus on every field at about 1/30 of the cost, so it became the default. That was the
+  biggest surprise here, and it's a real saving for a client processing hundreds of documents.
+- **A demo mode** so anyone can try it without an API key.
+
+<!-- TODO before publishing: run it on a few of your own documents and add one honest
+sentence about what happened, e.g. "I tested it on ... and ...". -->
+
+What earlier projects taught me: you start from a basic version and build it up, and only
+testing and real use show what a tool actually needs. Working with AI agents lets me make
+those changes quickly, often the same day a client asks.
+
+For a real client I wouldn't start from this schema. I'd start by asking how documents
+arrive today, who checks them and where the data has to end up, and build around that, so
+the new tool replaces the old routine without a steep learning curve. The question I start
+every project with is: what do *you* need?
 
 ## License
 
