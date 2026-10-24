@@ -1,0 +1,15 @@
+{
+  "document_type": "invoice",
+  "document_number": "2026/031",
+  "issuer.name": "Vrhovec Electrical",
+  "recipient.name": "Hollis Renovations",
+  "issue_date": "2026-10-09",
+  "due_date": "2026-10-23",
+  "currency": "EUR",
+  "subtotal": 1160.60,
+  "discount_amount": 58.03,
+  "tax_rate": 22,
+  "tax_amount": 242.57,
+  "total": 1345.14,
+  "line_items.amount": [672.00, 185.00, 89.60, 214.00]
+}

@@ -1,0 +1,63 @@
+{
+  "document_type": "quote",
+  "document_number": "Q-26-0187",
+  "issuer": {
+    "name": "Marlow Tile & Stone",
+    "address": "Industrijska ulica 7, 2000 Maribor",
+    "email": "sales@marlow-tile.example",
+    "tax_id": "DEMO-MTS-0042"
+  },
+  "recipient": {
+    "name": "Hollis Renovations",
+    "address": "Delavska ulica 41, 1000 Ljubljana",
+    "email": "dana@hollis-renovations.example",
+    "tax_id": ""
+  },
+  "issue_date": "2026-09-14",
+  "due_date": "2026-10-14",
+  "delivery_date": "",
+  "delivery_address": "Linden Court, flat 4",
+  "currency": "EUR",
+  "line_items": [
+    {
+      "description": "Porcelain floor tile 60x60 matt grey",
+      "quantity": 32.0,
+      "unit": "m2",
+      "unit_price": 38.5,
+      "amount": 1232.0
+    },
+    {
+      "description": "Wall tile 20x60 white gloss",
+      "quantity": 45.0,
+      "unit": "m2",
+      "unit_price": 27.9,
+      "amount": 1255.5
+    },
+    {
+      "description": "Tile adhesive C2TE 25 kg",
+      "quantity": 18.0,
+      "unit": "bag",
+      "unit_price": 14.2,
+      "amount": 255.6
+    },
+    {
+      "description": "Grout 5 kg, anthracite",
+      "quantity": 6.0,
+      "unit": "bag",
+      "unit_price": 11.75,
+      "amount": 70.5
+    }
+  ],
+  "subtotal": 2813.6,
+  "discount_amount": null,
+  "tax_rate": 22.0,
+  "tax_amount": 618.99,
+  "total": 3432.59,
+  "summary": "Marlow Tile & Stone quotes Hollis Renovations for floor and wall tiles, adhesive and grout for the Linden Court flat 4 bathroom, totalling 3,432.59 EUR incl. 22% VAT.",
+  "review_flags": [
+    "Site lead thinks adhesive quantity (18 bags) may be too high",
+    "No fixed delivery date; lead time 5 working days from order",
+    "Full street address of Linden Court site not stated",
+    "Delivery included only because net total exceeds 2,500 EUR; check if quantities are reduced"
+  ]
+}

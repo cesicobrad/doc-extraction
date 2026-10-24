@@ -1,0 +1,7 @@
+anthropic>=2.3
+streamlit>=1.50
+pydantic>=2.10
+pandas>=2.2
+pillow>=10.0
+pypdfium2>=4.30
+python-dotenv>=1.0

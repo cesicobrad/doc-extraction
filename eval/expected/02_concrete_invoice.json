@@ -1,0 +1,15 @@
+{
+  "document_type": "invoice",
+  "document_number": "GRM-2026-1043",
+  "issuer.name": "Greyfield Ready-Mix",
+  "recipient.name": "Hollis Renovations",
+  "issue_date": "2026-10-02",
+  "due_date": "2026-11-01",
+  "delivery_date": "2026-10-01",
+  "currency": "EUR",
+  "subtotal": 1185.00,
+  "tax_rate": 22,
+  "tax_amount": 260.70,
+  "total": 1445.70,
+  "line_items.amount": [840.00, 285.00, 60.00]
+}

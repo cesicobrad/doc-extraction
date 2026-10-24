@@ -1,0 +1,14 @@
+{
+  "document_type": "quote",
+  "document_number": "Q-26-0187",
+  "issuer.name": "Marlow Tile & Stone",
+  "recipient.name": "Hollis Renovations",
+  "issue_date": "2026-09-14",
+  "due_date": "2026-10-14",
+  "currency": "EUR",
+  "subtotal": 2813.60,
+  "tax_rate": 22,
+  "tax_amount": 618.99,
+  "total": 3432.59,
+  "line_items.amount": [1232.00, 1255.50, 255.60, 70.50]
+}
