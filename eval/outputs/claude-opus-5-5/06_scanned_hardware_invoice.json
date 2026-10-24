@@ -1,0 +1,62 @@
+{
+  "document_type": "invoice",
+  "document_number": "IH-88213",
+  "issuer": {
+    "name": "Ironbark Hardware",
+    "address": "Trgovska cesta 9, 1290 Grosuplje",
+    "email": "shop@ironbark-hw.example",
+    "tax_id": ""
+  },
+  "recipient": {
+    "name": "Hollis Renovations",
+    "address": "Delavska ulica 41, 1000 Ljubljana",
+    "email": "",
+    "tax_id": ""
+  },
+  "issue_date": "2026-10-16",
+  "due_date": "",
+  "delivery_date": "",
+  "delivery_address": "",
+  "currency": "EUR",
+  "line_items": [
+    {
+      "description": "Plasterboard screws 3.5x35, box of 1000",
+      "quantity": 4.0,
+      "unit": "box",
+      "unit_price": 12.9,
+      "amount": 51.6
+    },
+    {
+      "description": "Wood glue D3, 750 ml",
+      "quantity": 3.0,
+      "unit": "pcs",
+      "unit_price": 8.45,
+      "amount": 25.35
+    },
+    {
+      "description": "Masking tape 50 mm",
+      "quantity": 12.0,
+      "unit": "pcs",
+      "unit_price": 3.2,
+      "amount": 38.4
+    },
+    {
+      "description": "Dust sheet 3.6 x 2.7 m",
+      "quantity": 5.0,
+      "unit": "pcs",
+      "unit_price": 6.8,
+      "amount": 34.0
+    }
+  ],
+  "subtotal": 149.35,
+  "discount_amount": null,
+  "tax_rate": 22.0,
+  "tax_amount": 32.86,
+  "total": 182.21,
+  "summary": "Ironbark Hardware invoiced Hollis Renovations for screws, wood glue, masking tape and dust sheets totalling EUR 182.21 incl. 22% VAT, already paid by card.",
+  "review_flags": [
+    "PAID stamp partly obscures screw unit price (12.90) and glue quantity (3); values consistent with line amounts",
+    "Marked paid by card at counter; no payment due",
+    "No tax IDs shown"
+  ]
+}

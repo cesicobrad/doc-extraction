@@ -10,13 +10,13 @@
   "recipient": {
     "name": "Hollis Renovations",
     "address": "Delavska ulica 41, 1000 Ljubljana",
-    "email": "dana@hollis-renovations.example",
+    "email": "",
     "tax_id": ""
   },
   "issue_date": "2026-09-14",
   "due_date": "2026-10-14",
   "delivery_date": "",
-  "delivery_address": "Linden Court, flat 4",
+  "delivery_address": "Linden Court, flat 4 - bathroom",
   "currency": "EUR",
   "line_items": [
     {
@@ -53,11 +53,11 @@
   "tax_rate": 22.0,
   "tax_amount": 618.99,
   "total": 3432.59,
-  "summary": "Marlow Tile & Stone quotes Hollis Renovations for floor and wall tiles, adhesive and grout for the Linden Court flat 4 bathroom, totalling 3,432.59 EUR incl. 22% VAT.",
+  "summary": "Marlow Tile & Stone quotes EUR 3,432.59 incl. VAT for floor and wall tiles, adhesive and grout for Hollis Renovations' Linden Court flat 4 bathroom.",
   "review_flags": [
-    "Site lead thinks adhesive quantity (18 bags) may be too high",
-    "No fixed delivery date; lead time 5 working days from order",
-    "Full street address of Linden Court site not stated",
-    "Delivery included only because net total exceeds 2,500 EUR; check if quantities are reduced"
+    "Site lead Dana Petrič considers the adhesive quantity (18 bags) high; verify before ordering",
+    "Delivery date not stated; quote gives 5 working day lead time from order",
+    "Delivery address is project site only; full street address not given",
+    "Recipient email not stated in quote"
   ]
 }

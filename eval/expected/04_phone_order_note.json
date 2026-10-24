@@ -5,5 +5,11 @@
   "delivery_date": "2026-10-22",
   "delivery_address": "Vrtna ulica 12",
   "total": null,
-  "line_items.quantity": [40, 2, 10, 2]
+  "line_items.quantity": [
+    40,
+    2,
+    10,
+    2
+  ],
+  "_arithmetic_flagged": false
 }

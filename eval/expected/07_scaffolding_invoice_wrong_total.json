@@ -1,0 +1,15 @@
+{
+  "document_type": "invoice",
+  "document_number": "TM-26-0298",
+  "issuer.name": "Tallmast Scaffolding",
+  "recipient.name": "Hollis Renovations",
+  "issue_date": "2026-10-19",
+  "due_date": "2026-11-03",
+  "currency": "EUR",
+  "subtotal": 1864.00,
+  "tax_rate": 22,
+  "tax_amount": 410.08,
+  "total": 2247.08,
+  "line_items.amount": [1240.00, 480.00, 144.00],
+  "_arithmetic_flagged": true
+}

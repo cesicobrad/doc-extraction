@@ -1,22 +1,26 @@
 # Document extraction with human review
 
-Turns messy business paperwork (forwarded emails, PDF invoices and orders, notes from a
-phone call) into structured JSON and a clean summary table. A person checks and corrects
-the result before anything is saved.
+[![CI](https://github.com/cesicobrad/doc-extraction/actions/workflows/ci.yml/badge.svg)](https://github.com/cesicobrad/doc-extraction/actions/workflows/ci.yml)
 
-![Review screen: a PDF invoice on the left, extracted fields and line items on the right, with checks and an Approve button](docs/screenshot.png)
+Turns messy business paperwork (forwarded emails, PDF invoices and orders, photos of paper
+invoices, notes from a phone call) into structured JSON and a clean summary table. A person
+checks and corrects the result before anything is saved.
+
+![Review screen: a photographed invoice with a PAID stamp on the left, extracted fields and line items on the right, with the model's notes and an Approve button](docs/screenshot.png)
 
 ## What it does
 
-1. **Input:** pick a sample, upload a PDF / `.eml` / `.txt`, or paste text.
-2. **Extract:** Claude (`claude-opus-5-5`) reads the document and returns data that must
-   match a fixed schema (structured outputs, validated with Pydantic). It covers parties,
-   document number, dates, currency, line items, subtotal, discount, tax and total. PDFs
-   go to the model as-is, so the layout, including tables, is preserved.
+1. **Input:** pick a sample, upload a PDF, photo or scan (PNG/JPG), `.eml` or `.txt`, or
+   paste text.
+2. **Extract:** Claude reads the document and returns data that must match a fixed schema
+   (structured outputs, validated with Pydantic). It covers parties, document number,
+   dates, currency, line items, subtotal, discount, tax and total. PDFs and images go to
+   the model as-is, so layout and tables are preserved, and no separate OCR step is needed.
 3. **Review:** every field and line item can be edited. Two kinds of checks appear before
    approval:
    - **Model notes:** anything the model thinks a person should look at, e.g. *"site lead
-     thinks the adhesive quantity may be too high"* or *"no prices given, apply account rates"*.
+     thinks the adhesive quantity may be too high"* or *"PAID stamp partly covers the
+     price; value confirmed by the line total"*.
    - **Arithmetic checks:** deterministic code verifies quantity × price, the line item
      sum, tax at the stated rate, and the total. These re-run live as you edit.
 4. **Approve & save:** the reviewed record is written to `data/approved/` as JSON, marked
@@ -24,9 +28,22 @@ the result before anything is saved.
 
 Nothing is saved without a person approving it. The model proposes, the reviewer decides.
 
+A wrong total on a supplier invoice is flagged by both the model and the code check:
+
+![An invoice whose stated total has transposed digits, with a model note and a red arithmetic warning](docs/wrong-total.png)
+
+## Try it without an API key
+
+With no `ANTHROPIC_API_KEY` set, the app starts in **demo mode**: the bundled samples load
+the results saved by the last evaluation run (clearly labelled as saved results), and the
+review, checks and approve flow all work normally. Approved records are kept for the
+browser session only. Uploads and pasted text need a key. This makes the app suitable for
+free hosting on Streamlit Community Cloud. Add the key as a secret there to turn on live
+extraction.
+
 ## Samples
 
-Five made-up documents from a renovation contractor's inbox, each with a different shape:
+Eight made-up documents from a renovation contractor's inbox, each with a different shape:
 
 | File | What it is | What makes it awkward |
 |---|---|---|
@@ -35,34 +52,77 @@ Five made-up documents from a renovation contractor's inbox, each with a differe
 | `03_timber_purchase_order.pdf` | Purchase order sent to a timber yard | The contractor is the *issuer* here, not the recipient |
 | `04_phone_order_note.txt` | Notes from a phone call | No prices, "Thursday this week" instead of a date, quantities written in words |
 | `05_subcontractor_invoice.eml` | Electrician's invoice typed into an email | Informal, early-payment discount, `1.345,14 €` formatting |
+| `06_scanned_hardware_invoice.jpg` | Phone photo of a paper invoice | Tilted, blurred, noisy JPEG; a red PAID stamp covers a price and a quantity |
+| `07_scaffolding_invoice_wrong_total.pdf` | Scaffolding hire invoice | The stated total is wrong (digits transposed). The correct extraction keeps the stated figure, and the checks must flag it |
+| `08_racun_slovenian.pdf` | Slovenian builder's invoice (*račun*) | Slovenian labels (*Osnova za DDV*, *Za plačilo*, *Rok plačila*), `12. 10. 2026` dates, `1.529,80` numbers, decimal quantities |
 
 All companies, people, addresses, IDs and bank details are fictional. Email domains use
-the reserved `.example` TLD.
+the reserved `.example` TLD. `scripts/make_samples.py` regenerates the PDFs and the photo.
 
 ## Evaluation
 
-`eval/expected/` holds the correct values for each sample, written by hand. The eval runs
-extraction on every sample and checks 58 fields: document type, number, parties, dates,
-currency, subtotal, discount, tax rate, tax, total, and the line item amounts (or
-quantities, for the order with no prices).
+`eval/expected/` holds the correct values for each sample, written by hand. The eval
+extracts every sample and checks 103 fields: document type, number, parties, dates,
+currency, subtotal, discount, tax rate, tax, total, line item amounts and quantities, and
+whether the arithmetic checks fire. They must fire on the wrong-total invoice and stay quiet
+on the other seven.
+
+Result with `claude-opus-5-5`:
 
 ```
-01_forwarded_quote           12/12
-02_concrete_invoice          13/13
-03_timber_purchase_order     13/13
-04_phone_order_note           7/7
-05_subcontractor_invoice     13/13
+01_forwarded_quote                     13/13
+02_concrete_invoice                    14/14
+03_timber_purchase_order               14/14
+04_phone_order_note                     8/8
+05_subcontractor_invoice               14/14
+06_scanned_hardware_invoice            13/13
+07_scaffolding_invoice_wrong_total     13/13
+08_racun_slovenian                     14/14
 
-Score: 58/58 fields correct (100%)
+Score: 103/103 fields correct (100%)
 PASS
 ```
 
-The run passes at 95% or above. Raw model outputs from the last run are in
-`eval/outputs/`, so `--rescore` can re-check them without calling the API.
+The run passes at 95% or above. Raw model outputs are saved in `eval/outputs/<model>/`, so
+`--rescore` re-checks them without calling the API. CI does that on every push, together
+with the unit tests.
+
+### Model comparison
+
+The same eval, one run per model, documents processed one at a time:
+
+| Model | Accuracy | Avg time / doc | Approx. cost / doc |
+|---|---|---|---|
+| `claude-opus-5-5` | 103/103 (100%) | 7.2 s | $0.029 |
+| `claude-sonnet-5-5` | 103/103 (100%) | 4.7 s | $0.014 |
+| `claude-haiku-5-5` | 103/103 (100%) | 6.5 s | $0.001 |
+
+Cost is from the token counts each run reported, at standard API prices. To compare from
+the saved runs, use `python eval/run_eval.py --compare`.
+
+What the table does and doesn't show:
+
+- **All three models got every field right, so this eval can't separate them on accuracy.**
+  Eight documents is a small set. A real deployment should add the customer's own
+  documents to `eval/expected/` before choosing.
+- The models differed in their notes to the reviewer. On the wrong-total invoice, Opus and
+  Haiku both explained the mismatch in their own words. Sonnet extracted the figures
+  correctly but didn't mention it, and the code check caught it anyway. That's the reason
+  the arithmetic check lives in code rather than in the prompt.
+- Haiku wrote longer responses than the other two (about 1,300 output tokens per document,
+  versus roughly 550–1,050), which is why it isn't the fastest despite being the smallest model.
+
+**Recommendation:** `claude-sonnet-5-5` as the default for this workload. It matched Opus
+on every field, was the fastest, and costs about half as much. Haiku is the choice for
+high-volume batch processing, where costing 14× less than Sonnet and 30× less than Opus matters more than the quality of the
+reviewer notes. Opus is worth keeping for the documents a reviewer flags as hard. The code
+currently defaults to Opus. Switch with `EXTRACTION_MODEL=claude-sonnet-5-5` in `.env`, or
+pass `--model` to the eval.
 
 ## Run it
 
-Requires Python 3.11+ and an [Anthropic API key](https://platform.claude.com/settings/keys).
+Requires Python 3.11+ and an [Anthropic API key](https://platform.claude.com/settings/keys)
+(or none, for demo mode).
 
 ```bash
 python -m venv .venv
@@ -72,35 +132,44 @@ cp .env.example .env          # then add your ANTHROPIC_API_KEY
 streamlit run app.py
 ```
 
-Evaluation:
+Tests and evaluation:
 
 ```bash
-python eval/run_eval.py            # extract all samples (5 API calls), then score
-python eval/run_eval.py --rescore  # score the saved outputs, no API calls
+pip install -r requirements-dev.txt
+pytest                                           # unit tests, no network
+python eval/run_eval.py                          # extract all samples (8 API calls), then score
+python eval/run_eval.py --model claude-haiku-5-5
+python eval/run_eval.py --rescore                # score saved outputs, no API calls
+python eval/run_eval.py --compare                # model comparison table from saved runs
 ```
-
-Extracting one document typically takes under 20 seconds and costs a few cents.
 
 ## Project layout
 
 ```
 extractor.py          schema, prompt, Claude call, arithmetic checks
-app.py                Streamlit review UI
-eval/run_eval.py      field-level scoring against eval/expected/
-samples/              the five test documents
-scripts/              regenerate the PDF samples and the screenshot (requirements-dev.txt)
+app.py                Streamlit review UI (with demo mode)
+eval/run_eval.py      field-level scoring against eval/expected/, model comparison
+eval/outputs/         saved model outputs and timings per model
+tests/                unit tests for the checks, input handling and scoring
+samples/              the eight test documents
+scripts/              regenerate the samples and the screenshots (requirements-dev.txt)
 ```
 
 ## Design notes
 
 - **Structured outputs, not "please reply in JSON".** The response is constrained to the
   schema, so it always parses. Missing text fields come back as empty strings and missing
-  numbers as `null`, and the prompt forbids guessing values.
+  numbers as `null`, and the prompt forbids guessing values. Too many nullable fields hit
+  the API's schema-complexity limit, which is why only the numbers are nullable.
 - **The model flags, the code verifies.** Arithmetic is checked in Python, not by the
-  model, so a wrong total is caught even if the model copies it faithfully from the document.
+  model, so a wrong total is caught even if the model copies it faithfully and says nothing.
 - **One call per document.** No agent loop is needed for this task. That keeps it fast,
   cheap and easy to reason about.
-- **Refusal fallback** is turned on for the API call, so a false positive from a safety
+- **Refusal fallback** is turned on for Opus and Sonnet, so a false positive from a safety
   classifier doesn't stop a legitimate document.
-- **For production** you would add OCR for scanned images, a queue for bulk inbox
-  processing, and an export to the accounting or ERP system instead of JSON files.
+- **For production** you would add a queue for bulk inbox processing, a check for
+  duplicate invoices, and an export to the accounting or ERP system instead of JSON files.
+
+## How I built this
+
+<!-- Written by the author. -->

@@ -1,0 +1,53 @@
+{
+  "document_type": "invoice",
+  "document_number": "TM-26-0298",
+  "issuer": {
+    "name": "Tallmast Scaffolding",
+    "address": "Industrijska cona 4, 1360 Vrhnika",
+    "email": "accounts@tallmast.example",
+    "tax_id": "DEMO-TMS-3310"
+  },
+  "recipient": {
+    "name": "Hollis Renovations",
+    "address": "Delavska ulica 41, 1000 Ljubljana",
+    "email": "",
+    "tax_id": ""
+  },
+  "issue_date": "2026-10-19",
+  "due_date": "2026-11-03",
+  "delivery_date": "",
+  "delivery_address": "Vrtna ulica 12, Kamnik",
+  "currency": "EUR",
+  "line_items": [
+    {
+      "description": "Scaffold hire, facade, per week",
+      "quantity": 4.0,
+      "unit": "week",
+      "unit_price": 310.0,
+      "amount": 1240.0
+    },
+    {
+      "description": "Erection and dismantling",
+      "quantity": 1.0,
+      "unit": "pcs",
+      "unit_price": 480.0,
+      "amount": 480.0
+    },
+    {
+      "description": "Safety netting, per m2",
+      "quantity": 60.0,
+      "unit": "m2",
+      "unit_price": 2.4,
+      "amount": 144.0
+    }
+  ],
+  "subtotal": 1864.0,
+  "discount_amount": null,
+  "tax_rate": 22.0,
+  "tax_amount": 410.08,
+  "total": 2247.08,
+  "summary": "Tallmast Scaffolding invoices Hollis Renovations for facade scaffold hire, erection/dismantling and safety netting at the Kamnik site, stated total due EUR 2,247.08.",
+  "review_flags": [
+    "Stated total 2,247.08 does not match net + VAT (1,864.00 + 410.08 = 2,274.08); possible transposed digits"
+  ]
+}

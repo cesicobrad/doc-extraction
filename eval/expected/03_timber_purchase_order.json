@@ -7,9 +7,14 @@
   "delivery_date": "2026-10-13",
   "delivery_address": "Vrtna ulica 12",
   "currency": "EUR",
-  "subtotal": 1806.00,
+  "subtotal": 1806.0,
   "tax_rate": 22,
   "tax_amount": 397.32,
   "total": 2203.32,
-  "line_items.amount": [1104.00, 540.00, 162.00]
+  "line_items.amount": [
+    1104.0,
+    540.0,
+    162.0
+  ],
+  "_arithmetic_flagged": false
 }

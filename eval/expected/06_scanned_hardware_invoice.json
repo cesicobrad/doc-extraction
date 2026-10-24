@@ -1,0 +1,25 @@
+{
+  "document_type": "invoice",
+  "document_number": "IH-88213",
+  "issuer.name": "Ironbark Hardware",
+  "recipient.name": "Hollis Renovations",
+  "issue_date": "2026-10-16",
+  "currency": "EUR",
+  "subtotal": 149.35,
+  "tax_rate": 22,
+  "tax_amount": 32.86,
+  "total": 182.21,
+  "line_items.amount": [
+    51.6,
+    25.35,
+    38.4,
+    34.0
+  ],
+  "line_items.quantity": [
+    4,
+    3,
+    12,
+    5
+  ],
+  "_arithmetic_flagged": false
+}

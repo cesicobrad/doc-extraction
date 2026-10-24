@@ -1,0 +1,26 @@
+{
+  "document_type": "invoice",
+  "document_number": "26-0117",
+  "issuer.name": "Zidarstvo Jelovica",
+  "recipient.name": "Hollis Renovations",
+  "issue_date": "2026-10-12",
+  "due_date": "2026-10-27",
+  "currency": "EUR",
+  "subtotal": 1529.8,
+  "tax_rate": 22,
+  "tax_amount": 336.56,
+  "total": 1866.36,
+  "line_items.amount": [
+    629.0,
+    483.0,
+    372.8,
+    45.0
+  ],
+  "line_items.quantity": [
+    18.5,
+    42,
+    2,
+    1
+  ],
+  "_arithmetic_flagged": false
+}

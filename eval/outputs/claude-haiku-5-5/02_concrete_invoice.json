@@ -46,9 +46,10 @@
   "tax_rate": 22.0,
   "tax_amount": 260.7,
   "total": 1445.7,
-  "summary": "Greyfield Ready-Mix invoices Hollis Renovations EUR 1,445.70 (incl. 22% VAT) for 7.5 m3 of C25/30 ready-mix concrete, pump hire and a part-load surcharge for the Vrtna ulica 12, Kamnik foundation pour.",
+  "summary": "Greyfield Ready-Mix invoiced Hollis Renovations EUR 1,445.70 incl. 22% VAT for concrete pour at Vrtna ulica 12, Kamnik (delivery note DN-55810).",
   "review_flags": [
-    "Dates read as DD/MM/YYYY (consistent with 30-day terms)",
-    "Delivery note DN-55810 referenced; verify against received quantity"
+    "Surcharge line has no unit stated",
+    "Recipient email and tax ID not stated",
+    "Dates read as DD/MM/YYYY; confirm issue date 2 Oct 2026 and due date 1 Nov 2026"
   ]
 }

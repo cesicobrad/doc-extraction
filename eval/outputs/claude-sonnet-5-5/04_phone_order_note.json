@@ -1,0 +1,66 @@
+{
+  "document_type": "order_request",
+  "document_number": "",
+  "issuer": {
+    "name": "Hollis Renovations",
+    "address": "",
+    "email": "",
+    "tax_id": ""
+  },
+  "recipient": {
+    "name": "Brookfield Builders Merchants",
+    "address": "",
+    "email": "",
+    "tax_id": ""
+  },
+  "issue_date": "2026-10-19",
+  "due_date": "",
+  "delivery_date": "2026-10-22",
+  "delivery_address": "Vrtna ulica 12, Kamnik",
+  "currency": "",
+  "line_items": [
+    {
+      "description": "Portland cement, 25 kg bags",
+      "quantity": 40.0,
+      "unit": "bag",
+      "unit_price": null,
+      "amount": null
+    },
+    {
+      "description": "Sharp sand, bulk bag",
+      "quantity": 2.0,
+      "unit": "t",
+      "unit_price": null,
+      "amount": null
+    },
+    {
+      "description": "Damp proof membrane, 4 m wide rolls",
+      "quantity": 10.0,
+      "unit": "roll",
+      "unit_price": null,
+      "amount": null
+    },
+    {
+      "description": "Galvanised nails, 100 mm, boxes",
+      "quantity": 2.0,
+      "unit": "box",
+      "unit_price": null,
+      "amount": null
+    }
+  ],
+  "subtotal": null,
+  "discount_amount": null,
+  "tax_rate": null,
+  "tax_amount": null,
+  "total": null,
+  "summary": "Dana from Hollis Renovations phoned in an order to Brookfield Builders Merchants for cement, sharp sand, damp proof membrane and nails, for delivery to Vrtna ulica 12, Kamnik by 22 Oct 2026 (before 10:00 if possible), at account rates with no total stated.",
+  "review_flags": [
+    "No prices given; use usual account rates",
+    "Delivery requested before 10:00 on 2026-10-22 if possible",
+    "Nail box quantity 'a couple' confirmed as 2; box size not specified",
+    "Sharp sand: bulk bag size not specified (2 tonnes total)",
+    "Call Dana on site phone if anything is out of stock",
+    "Order taken by phone; no document number, contact details or currency",
+    "Dana's surname and contact numbers not recorded"
+  ]
+}

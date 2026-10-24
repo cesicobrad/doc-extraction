@@ -1,0 +1,54 @@
+{
+  "document_type": "invoice",
+  "document_number": "GRM-2026-1043",
+  "issuer": {
+    "name": "Greyfield Ready-Mix",
+    "address": "Gramozna pot 2, 1218 Komenda",
+    "email": "billing@greyfield-mix.example",
+    "tax_id": "DEMO-GRM-7731"
+  },
+  "recipient": {
+    "name": "Hollis Renovations",
+    "address": "Delavska ulica 41, 1000 Ljubljana",
+    "email": "",
+    "tax_id": ""
+  },
+  "issue_date": "2026-10-02",
+  "due_date": "2026-11-01",
+  "delivery_date": "2026-10-01",
+  "delivery_address": "Vrtna ulica 12, Kamnik",
+  "currency": "EUR",
+  "line_items": [
+    {
+      "description": "Ready-mix concrete C25/30, S3, 16 mm aggregate",
+      "quantity": 7.5,
+      "unit": "m3",
+      "unit_price": 112.0,
+      "amount": 840.0
+    },
+    {
+      "description": "Concrete pump hire incl. operator",
+      "quantity": 3.0,
+      "unit": "h",
+      "unit_price": 95.0,
+      "amount": 285.0
+    },
+    {
+      "description": "Part-load delivery surcharge",
+      "quantity": 1.0,
+      "unit": "",
+      "unit_price": 60.0,
+      "amount": 60.0
+    }
+  ],
+  "subtotal": 1185.0,
+  "discount_amount": null,
+  "tax_rate": 22.0,
+  "tax_amount": 260.7,
+  "total": 1445.7,
+  "summary": "Greyfield Ready-Mix invoices Hollis Renovations EUR 1,445.70 (incl. 22% VAT) for concrete, pump hire and a part-load surcharge delivered to Kamnik.",
+  "review_flags": [
+    "Date format DD/MM vs MM/DD ambiguous (02/10/2026, 01/10/2026, 01/11/2026); assumed MM/DD/YYYY, consistent with 30-day terms",
+    "Part-load surcharge has no unit"
+  ]
+}

@@ -27,14 +27,14 @@
       "amount": null
     },
     {
-      "description": "Sharp sand (bulk bag acceptable)",
+      "description": "Sharp sand, bulk bag",
       "quantity": 2.0,
       "unit": "t",
       "unit_price": null,
       "amount": null
     },
     {
-      "description": "Damp proof membrane, 4 m wide rolls",
+      "description": "Damp proof membrane, 4 m wide",
       "quantity": 10.0,
       "unit": "roll",
       "unit_price": null,
@@ -53,14 +53,14 @@
   "tax_rate": null,
   "tax_amount": null,
   "total": null,
-  "summary": "Phone order from Dana at Hollis Renovations asking Brookfield Builders Merchants to deliver cement, sharp sand, damp proof membrane and galvanised nails to Vrtna ulica 12, Kamnik by 22 October 2026; no prices discussed.",
+  "summary": "Phone order from Dana at Hollis Renovations to Brookfield Builders Merchants for cement, sharp sand, damp proof membrane and nails for delivery to Vrtna ulica 12, Kamnik on 2026-10-22; no prices agreed (usual account rates).",
   "review_flags": [
     "No prices given; apply usual account rates",
-    "Delivery requested before 10:00 on 2026-10-22 if possible",
+    "Currency not stated",
+    "Delivery requested before 10:00 if possible",
     "Membrane roll length not specified",
-    "Nail box size/count per box not specified",
-    "Site phone number for callback not recorded",
-    "Order taken by phone; no written confirmation or order number",
-    "Currency not stated"
+    "Nail box size/quantity per box not specified",
+    "Contact is site phone; number not recorded",
+    "Taken from phone note; confirm order with customer"
   ]
 }

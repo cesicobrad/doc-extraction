@@ -6,10 +6,16 @@
   "issue_date": "2026-10-09",
   "due_date": "2026-10-23",
   "currency": "EUR",
-  "subtotal": 1160.60,
+  "subtotal": 1160.6,
   "discount_amount": 58.03,
   "tax_rate": 22,
   "tax_amount": 242.57,
   "total": 1345.14,
-  "line_items.amount": [672.00, 185.00, 89.60, 214.00]
+  "line_items.amount": [
+    672.0,
+    185.0,
+    89.6,
+    214.0
+  ],
+  "_arithmetic_flagged": false
 }

@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from datetime import datetime
 from pathlib import Path
@@ -16,14 +17,23 @@ import streamlit as st
 from dotenv import load_dotenv
 from PIL import ImageOps
 
-from extractor import MODEL, Extraction, LineItem, arithmetic_checks, content_from_file, extract
+from extractor import IMAGE_TYPES, MODEL, Extraction, LineItem, arithmetic_checks, content_from_file, extract
 
 ROOT = Path(__file__).resolve().parent
 SAMPLES = ROOT / "samples"
 APPROVED = ROOT / "data" / "approved"
+SAVED_OUTPUTS = ROOT / "eval" / "outputs" / MODEL
 DOC_TYPES = ["invoice", "quote", "purchase_order", "order_request", "other"]
+SAMPLE_SUFFIXES = {".pdf", ".eml", ".txt", *IMAGE_TYPES}
 
 load_dotenv(ROOT / ".env")
+if not os.environ.get("ANTHROPIC_API_KEY"):
+    try:  # Streamlit Community Cloud passes the key as a secret.
+        os.environ["ANTHROPIC_API_KEY"] = st.secrets["ANTHROPIC_API_KEY"]
+    except Exception:
+        pass
+# Without a key the app runs on the bundled samples using results saved by the eval.
+DEMO_MODE = not os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("DEMO_MODE") == "1"
 st.set_page_config(page_title="Document extraction", layout="wide")
 st.markdown(
     "<style>.block-container{padding-top:2.5rem;max-width:1600px}</style>",
@@ -38,11 +48,16 @@ def choose_input() -> tuple[str, bytes] | None:
         st.header("Input")
         mode = st.radio("Source", ["Sample document", "Upload a file", "Paste text"], label_visibility="collapsed")
         if mode == "Sample document":
-            files = sorted(p for p in SAMPLES.iterdir() if p.suffix in {".pdf", ".eml", ".txt"})
+            files = sorted(p for p in SAMPLES.iterdir() if p.suffix.lower() in SAMPLE_SUFFIXES)
             path = st.selectbox("Sample", files, format_func=lambda p: p.name)
             return path.name, path.read_bytes()
+        if DEMO_MODE:
+            st.info("Uploads and pasted text need an Anthropic API key. "
+                    "This demo runs on the bundled samples; see the README to run it with your own key.")
+            return None
         if mode == "Upload a file":
-            up = st.file_uploader("PDF, email (.eml) or text", type=["pdf", "eml", "txt", "md"])
+            up = st.file_uploader("PDF, photo or scan, email (.eml) or text",
+                                  type=["pdf", "eml", "txt", "md", *(s.lstrip(".") for s in IMAGE_TYPES)])
             return (up.name, up.getvalue()) if up else None
         text = st.text_area("Paste an email or a plain-language description", height=260)
         return ("pasted.txt", text.encode("utf-8")) if text.strip() else None
@@ -60,6 +75,8 @@ def show_source(name: str, data: bytes) -> None:
                 img = img.crop((max(box[0] - pad, 0), max(box[1] - pad, 0),
                                 min(box[2] + pad, img.width), min(box[3] + pad, img.height)))
             st.image(img, width="stretch")
+    elif Path(name).suffix.lower() in IMAGE_TYPES:
+        st.image(data, width="stretch")
     else:
         st.code(data.decode("utf-8", errors="replace"), language=None, wrap_lines=False)
 
@@ -145,20 +162,27 @@ def summary_table(x: Extraction) -> pd.DataFrame:
     return pd.DataFrame(rows.items(), columns=["Field", "Value"])
 
 
-def save(x: Extraction, source: str, edited: bool) -> Path:
+def save(x: Extraction, source: str, edited: bool) -> str:
+    """Write the approved record to data/approved/ (in demo mode, keep it in this session only)."""
+    record = {"approved_at": datetime.now().isoformat(timespec="seconds"), "source": source,
+              "edited_by_reviewer": edited, "data": x.model_dump()}
+    if DEMO_MODE:
+        st.session_state.setdefault("demo_records", []).append(record)
+        return "this session (demo mode: nothing is written to disk)"
     APPROVED.mkdir(parents=True, exist_ok=True)
     slug = re.sub(r"[^A-Za-z0-9-]+", "-", x.document_number or x.document_type).strip("-")
     path = APPROVED / f"{datetime.now():%Y%m%d-%H%M%S}_{slug}.json"
-    record = {"approved_at": datetime.now().isoformat(timespec="seconds"), "source": source,
-              "edited_by_reviewer": edited, "data": x.model_dump()}
     path.write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
-    return path
+    return f"`{path.relative_to(ROOT)}`"
 
 
 def saved_records() -> pd.DataFrame:
+    if DEMO_MODE:
+        records = st.session_state.get("demo_records", [])[::-1]
+    else:
+        records = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(APPROVED.glob("*.json"), reverse=True)]
     rows = []
-    for p in sorted(APPROVED.glob("*.json"), reverse=True):
-        r = json.loads(p.read_text(encoding="utf-8"))
+    for r in records:
         d = r["data"]
         rows.append({"Approved": r["approved_at"].replace("T", " "), "Type": d["document_type"],
                      "Number": d["document_number"], "From": d["issuer"]["name"],
@@ -170,11 +194,16 @@ def saved_records() -> pd.DataFrame:
 # --- Page ------------------------------------------------------------------
 
 st.title("Document extraction")
-st.caption(f"Emails, PDFs and plain-language requests → structured data, checked by a person before saving. Model: `{MODEL}`")
+st.caption(f"Emails, PDFs, scans and plain-language requests → structured data, "
+           f"checked by a person before saving. Model: `{MODEL}`")
+if DEMO_MODE:
+    st.warning(f"**Demo mode, saved results.** No API key is configured, so the samples show the output "
+               f"`{MODEL}` produced in the last evaluation run. Review, checks and approval work as normal.")
 
 picked = choose_input()
 if picked is None:
-    st.info("Choose a sample, upload a file, or paste text in the sidebar.")
+    st.info("Choose a sample in the sidebar." if DEMO_MODE
+            else "Choose a sample, upload a file, or paste text in the sidebar.")
     st.stop()
 
 name, data = picked
@@ -193,10 +222,14 @@ with left:
 with right:
     st.subheader("Extracted data")
     if st.session_state.result is None:
-        if st.button("Extract", type="primary"):
+        if st.button("Load saved result" if DEMO_MODE else "Extract", type="primary"):
             with st.spinner("Reading the document..."):
                 try:
-                    st.session_state.result = extract(content_from_file(name, data))
+                    if DEMO_MODE:
+                        saved = SAVED_OUTPUTS / f"{Path(name).stem}.json"
+                        st.session_state.result = Extraction.model_validate_json(saved.read_text(encoding="utf-8"))
+                    else:
+                        st.session_state.result = extract(content_from_file(name, data))
                     st.session_state.run += 1
                     st.rerun()
                 except Exception as e:  # shown to the reviewer instead of a stack trace
@@ -226,18 +259,17 @@ with right:
         st.success("No issues found. Line items, subtotal, tax and total are consistent.")
 
     if st.session_state.saved:
-        st.success(f"Approved and saved to `{st.session_state.saved}`")
+        st.success(f"Approved and saved to {st.session_state.saved}")
     else:
         c1, c2, _ = st.columns([2, 1, 3])
         if c1.button("Approve & save", type="primary", width="stretch"):
-            path = save(reviewed, name, edited=reviewed != original)
-            st.session_state.saved = str(path.relative_to(ROOT))
+            st.session_state.saved = save(reviewed, name, edited=reviewed != original)
             st.rerun()
         if c2.button("Discard", width="stretch"):
             st.session_state.result = None
             st.rerun()
 
-records = saved_records() if APPROVED.exists() else pd.DataFrame()
+records = saved_records()
 if not records.empty:
     st.divider()
     st.subheader("Approved records")

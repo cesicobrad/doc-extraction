@@ -1,0 +1,45 @@
+{
+  "model": "claude-sonnet-5-5",
+  "documents": {
+    "01_forwarded_quote": {
+      "seconds": 6.9,
+      "input_tokens": 2949,
+      "output_tokens": 1056
+    },
+    "02_concrete_invoice": {
+      "seconds": 4.0,
+      "input_tokens": 4139,
+      "output_tokens": 615
+    },
+    "03_timber_purchase_order": {
+      "seconds": 3.9,
+      "input_tokens": 4158,
+      "output_tokens": 587
+    },
+    "04_phone_order_note": {
+      "seconds": 5.1,
+      "input_tokens": 2421,
+      "output_tokens": 652
+    },
+    "05_subcontractor_invoice": {
+      "seconds": 5.2,
+      "input_tokens": 2682,
+      "output_tokens": 692
+    },
+    "06_scanned_hardware_invoice": {
+      "seconds": 4.7,
+      "input_tokens": 2954,
+      "output_tokens": 661
+    },
+    "07_scaffolding_invoice_wrong_total": {
+      "seconds": 3.8,
+      "input_tokens": 4030,
+      "output_tokens": 546
+    },
+    "08_racun_slovenian": {
+      "seconds": 4.1,
+      "input_tokens": 4182,
+      "output_tokens": 626
+    }
+  }
+}

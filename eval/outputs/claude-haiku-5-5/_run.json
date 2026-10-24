@@ -1,0 +1,45 @@
+{
+  "model": "claude-haiku-5-5",
+  "documents": {
+    "01_forwarded_quote": {
+      "seconds": 7.8,
+      "input_tokens": 2949,
+      "output_tokens": 1663
+    },
+    "02_concrete_invoice": {
+      "seconds": 5.4,
+      "input_tokens": 4139,
+      "output_tokens": 1193
+    },
+    "03_timber_purchase_order": {
+      "seconds": 5.0,
+      "input_tokens": 4158,
+      "output_tokens": 1153
+    },
+    "04_phone_order_note": {
+      "seconds": 7.6,
+      "input_tokens": 2421,
+      "output_tokens": 1528
+    },
+    "05_subcontractor_invoice": {
+      "seconds": 5.9,
+      "input_tokens": 2682,
+      "output_tokens": 1335
+    },
+    "06_scanned_hardware_invoice": {
+      "seconds": 6.3,
+      "input_tokens": 2954,
+      "output_tokens": 1354
+    },
+    "07_scaffolding_invoice_wrong_total": {
+      "seconds": 7.8,
+      "input_tokens": 4030,
+      "output_tokens": 1306
+    },
+    "08_racun_slovenian": {
+      "seconds": 6.1,
+      "input_tokens": 4182,
+      "output_tokens": 1329
+    }
+  }
+}

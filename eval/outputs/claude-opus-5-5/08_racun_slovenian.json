@@ -1,0 +1,60 @@
+{
+  "document_type": "invoice",
+  "document_number": "26-0117",
+  "issuer": {
+    "name": "ZIDARSTVO JELOVICA d.o.o.",
+    "address": "Pod gozdom 6, 4260 Bled",
+    "email": "info@zidarstvo-jelovica.example",
+    "tax_id": "DEMO-ZJ-5528"
+  },
+  "recipient": {
+    "name": "Hollis Renovations d.o.o.",
+    "address": "Delavska ulica 41, 1000 Ljubljana",
+    "email": "",
+    "tax_id": ""
+  },
+  "issue_date": "2026-10-12",
+  "due_date": "2026-10-27",
+  "delivery_date": "2026-10-09",
+  "delivery_address": "",
+  "currency": "EUR",
+  "line_items": [
+    {
+      "description": "Zidava predelne stene iz porobetona (aerated concrete partition wall construction)",
+      "quantity": 18.5,
+      "unit": "m2",
+      "unit_price": 34.0,
+      "amount": 629.0
+    },
+    {
+      "description": "Strojni omet sten (machine wall plastering)",
+      "quantity": 42.0,
+      "unit": "m2",
+      "unit_price": 11.5,
+      "amount": 483.0
+    },
+    {
+      "description": "Porobetonski bloki 10 cm (aerated concrete blocks 10 cm)",
+      "quantity": 2.0,
+      "unit": "pallet",
+      "unit_price": 186.4,
+      "amount": 372.8
+    },
+    {
+      "description": "Prevoz materiala (material transport)",
+      "quantity": 1.0,
+      "unit": "pcs",
+      "unit_price": 45.0,
+      "amount": 45.0
+    }
+  ],
+  "subtotal": 1529.8,
+  "discount_amount": null,
+  "tax_rate": 22.0,
+  "tax_amount": 336.56,
+  "total": 1866.36,
+  "summary": "Zidarstvo Jelovica d.o.o. invoices Hollis Renovations d.o.o. for aerated concrete partition wall construction, machine plastering, blocks and transport, totaling 1,866.36 EUR including 22% VAT.",
+  "review_flags": [
+    "Delivery date taken from service completion date (2026-10-09)"
+  ]
+}

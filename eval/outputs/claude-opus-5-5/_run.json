@@ -1,0 +1,45 @@
+{
+  "model": "claude-opus-5-5",
+  "documents": {
+    "01_forwarded_quote": {
+      "seconds": 7.9,
+      "input_tokens": 2949,
+      "output_tokens": 846
+    },
+    "02_concrete_invoice": {
+      "seconds": 7.7,
+      "input_tokens": 4139,
+      "output_tokens": 870
+    },
+    "03_timber_purchase_order": {
+      "seconds": 5.9,
+      "input_tokens": 4158,
+      "output_tokens": 637
+    },
+    "04_phone_order_note": {
+      "seconds": 7.2,
+      "input_tokens": 2421,
+      "output_tokens": 727
+    },
+    "05_subcontractor_invoice": {
+      "seconds": 8.1,
+      "input_tokens": 2682,
+      "output_tokens": 917
+    },
+    "06_scanned_hardware_invoice": {
+      "seconds": 7.6,
+      "input_tokens": 2954,
+      "output_tokens": 808
+    },
+    "07_scaffolding_invoice_wrong_total": {
+      "seconds": 6.6,
+      "input_tokens": 4030,
+      "output_tokens": 682
+    },
+    "08_racun_slovenian": {
+      "seconds": 7.0,
+      "input_tokens": 4182,
+      "output_tokens": 784
+    }
+  }
+}

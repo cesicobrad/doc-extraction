@@ -15,7 +15,7 @@
   },
   "issue_date": "2026-10-09",
   "due_date": "2026-10-23",
-  "delivery_date": "2026-10-09",
+  "delivery_date": "",
   "delivery_address": "Linden Court flat 4",
   "currency": "EUR",
   "line_items": [
@@ -53,11 +53,12 @@
   "tax_rate": 22.0,
   "tax_amount": 242.57,
   "total": 1345.14,
-  "summary": "Vrhovec Electrical invoices Hollis Renovations for the Linden Court flat 4 rewire (labour and materials), totalling 1,345.14 EUR incl. 22% VAT after a 5% discount.",
+  "summary": "Vrhovec Electrical s.p. invoiced Hollis Renovations 1,345.14 EUR for the electrical rewire at Linden Court flat 4, including a 5% early-payment discount.",
   "review_flags": [
-    "5% discount is conditional on early payment, agreed with Dana; confirm before paying",
-    "No PDF invoice provided; invoice sent in email body only",
-    "Issuer tax ID not stated",
-    "Unit for consumer unit not stated; assumed pcs"
+    "Invoice received as email text only, no PDF",
+    "5% discount was agreed verbally with Dana per the email",
+    "Issuer and recipient tax IDs not stated",
+    "Bank IBAN is a demo placeholder and should be verified before payment",
+    "Delivery address inferred from job site location"
   ]
 }

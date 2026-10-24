@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 import base64
+import os
 from pathlib import Path
 from typing import Literal, Optional
 
 import anthropic
 from pydantic import BaseModel, Field
 
-MODEL = "claude-opus-5-5"
+DEFAULT_MODEL = "claude-opus-5-5"
+MODEL = os.environ.get("EXTRACTION_MODEL", DEFAULT_MODEL)
+# Models that accept the server-side refusal fallback ("default" form).
+FALLBACK_MODELS = {"claude-opus-5-5", "claude-sonnet-5-5", "claude-fable-5-1"}
 
 SYSTEM_PROMPT = """You extract structured data from business documents for a construction \
 and trades company: supplier quotes, invoices, purchase orders, and informal order requests \
@@ -70,6 +74,8 @@ class Extraction(BaseModel):
 
 
 TEXT_SUFFIXES = {".txt", ".eml", ".md"}
+IMAGE_TYPES = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
+SUPPORTED_SUFFIXES = {".pdf", *TEXT_SUFFIXES, *IMAGE_TYPES}
 
 
 def content_from_file(name: str, data: bytes) -> dict:
@@ -84,38 +90,54 @@ def content_from_file(name: str, data: bytes) -> dict:
                 "data": base64.standard_b64encode(data).decode("ascii"),
             },
         }
+    if suffix in IMAGE_TYPES:
+        return {
+            "type": "image",
+            "source": {
+                "type": "base64",
+                "media_type": IMAGE_TYPES[suffix],
+                "data": base64.standard_b64encode(data).decode("ascii"),
+            },
+        }
     if suffix in TEXT_SUFFIXES:
         return {"type": "text", "text": data.decode("utf-8", errors="replace")}
-    raise ValueError(f"Unsupported file type: {suffix} (use .pdf, .txt, .eml or .md)")
+    raise ValueError(f"Unsupported file type: {suffix or name} (use PDF, PNG/JPG, .eml or .txt)")
 
 
-def extract(block: dict, client: anthropic.Anthropic | None = None) -> Extraction:
-    """Send one document to Claude and return the validated extraction."""
+def extract_response(block: dict, client: anthropic.Anthropic | None = None, model: str = MODEL):
+    """Send one document to Claude; returns the full response (parsed output and usage)."""
     client = client or anthropic.Anthropic()
+    extra = {}
+    if model in FALLBACK_MODELS:
+        # Re-run on a fallback model if a safety classifier declines the request.
+        extra = {"betas": ["server-side-fallback-2026-07-01"], "fallbacks": "default"}
     response = client.beta.messages.parse(
-        model=MODEL,
+        model=model,
         max_tokens=16000,
         system=SYSTEM_PROMPT,
         output_config={"effort": "medium"},
-        # Re-run on a fallback model if a safety classifier declines the request.
-        betas=["server-side-fallback-2026-07-01"],
-        fallbacks="default",
         messages=[{
             "role": "user",
             "content": [block, {"type": "text", "text": "Extract the structured data from this document."}],
         }],
         output_format=Extraction,
+        **extra,
     )
     if response.stop_reason == "refusal":
         raise RuntimeError("The model declined to process this document.")
     if response.stop_reason == "max_tokens":
         raise RuntimeError("The response was cut off before the extraction was complete.")
-    return response.parsed_output
+    return response
 
 
-def extract_file(path: str | Path, client: anthropic.Anthropic | None = None) -> Extraction:
+def extract(block: dict, client: anthropic.Anthropic | None = None, model: str = MODEL) -> Extraction:
+    """Send one document to Claude and return the validated extraction."""
+    return extract_response(block, client, model).parsed_output
+
+
+def extract_file(path: str | Path, client: anthropic.Anthropic | None = None, model: str = MODEL) -> Extraction:
     path = Path(path)
-    return extract(content_from_file(path.name, path.read_bytes()), client)
+    return extract(content_from_file(path.name, path.read_bytes()), client, model)
 
 
 def arithmetic_checks(x: Extraction) -> list[str]:

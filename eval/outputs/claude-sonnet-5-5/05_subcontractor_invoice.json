@@ -1,0 +1,64 @@
+{
+  "document_type": "invoice",
+  "document_number": "2026/031",
+  "issuer": {
+    "name": "Vrhovec Electrical s.p.",
+    "address": "Kamniška cesta 3, 1230 Domžale",
+    "email": "tomaz@vrhovec-electrical.example",
+    "tax_id": ""
+  },
+  "recipient": {
+    "name": "Hollis Renovations",
+    "address": "Delavska ulica 41, 1000 Ljubljana",
+    "email": "accounts@hollis-renovations.example",
+    "tax_id": ""
+  },
+  "issue_date": "2026-10-09",
+  "due_date": "2026-10-23",
+  "delivery_date": "",
+  "delivery_address": "Linden Court, flat 4",
+  "currency": "EUR",
+  "line_items": [
+    {
+      "description": "Labour, electrician",
+      "quantity": 16.0,
+      "unit": "h",
+      "unit_price": 42.0,
+      "amount": 672.0
+    },
+    {
+      "description": "Cable NYM 3x2,5",
+      "quantity": 100.0,
+      "unit": "m",
+      "unit_price": 1.85,
+      "amount": 185.0
+    },
+    {
+      "description": "Double sockets, white",
+      "quantity": 14.0,
+      "unit": "pcs",
+      "unit_price": 6.4,
+      "amount": 89.6
+    },
+    {
+      "description": "Consumer unit 12-way + RCDs",
+      "quantity": 1.0,
+      "unit": "pcs",
+      "unit_price": 214.0,
+      "amount": 214.0
+    }
+  ],
+  "subtotal": 1160.6,
+  "discount_amount": 58.03,
+  "tax_rate": 22.0,
+  "tax_amount": 242.57,
+  "total": 1345.14,
+  "summary": "Vrhovec Electrical invoices Hollis Renovations 1,345.14 EUR (incl. 22% VAT, after 5% discount) for the rewire at Linden Court flat 4.",
+  "review_flags": [
+    "Subtotal 1160.60 does not match sum of line items (1160.60 is correct: 672+185+89.60+214 = 1160.60) - verified OK",
+    "Discount 5% is conditional on early payment, agreed verbally with Dana",
+    "VAT amount 242.57 is 22% of 1102.57 = 242.56; off by 0.01",
+    "Issuer tax ID/VAT number not shown",
+    "Invoice sent by email with no PDF"
+  ]
+}

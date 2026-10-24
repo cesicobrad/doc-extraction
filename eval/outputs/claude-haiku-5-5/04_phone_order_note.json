@@ -1,0 +1,67 @@
+{
+  "document_type": "order_request",
+  "document_number": "",
+  "issuer": {
+    "name": "Hollis Renovations",
+    "address": "",
+    "email": "",
+    "tax_id": ""
+  },
+  "recipient": {
+    "name": "Brookfield Builders Merchants",
+    "address": "",
+    "email": "",
+    "tax_id": ""
+  },
+  "issue_date": "2026-10-19",
+  "due_date": "",
+  "delivery_date": "2026-10-22",
+  "delivery_address": "Vrtna ulica 12, Kamnik",
+  "currency": "EUR",
+  "line_items": [
+    {
+      "description": "Portland cement, 25 kg bags",
+      "quantity": 40.0,
+      "unit": "bag",
+      "unit_price": null,
+      "amount": null
+    },
+    {
+      "description": "Sharp sand, bulk bag",
+      "quantity": 2.0,
+      "unit": "t",
+      "unit_price": null,
+      "amount": null
+    },
+    {
+      "description": "Damp proof membrane, 4 m wide",
+      "quantity": 10.0,
+      "unit": "roll",
+      "unit_price": null,
+      "amount": null
+    },
+    {
+      "description": "Galvanised nails, 100 mm",
+      "quantity": 2.0,
+      "unit": "box",
+      "unit_price": null,
+      "amount": null
+    }
+  ],
+  "subtotal": null,
+  "discount_amount": null,
+  "tax_rate": null,
+  "tax_amount": null,
+  "total": null,
+  "summary": "Dana of Hollis Renovations requested cement, sand, damp proof membrane and nails from Brookfield Builders Merchants for Vrtna ulica 12, Kamnik, delivery by 2026-10-22 at usual account rates, with no prices stated.",
+  "review_flags": [
+    "No prices discussed; usual account rates apply, so prices and totals are missing",
+    "Currency EUR inferred from Kamnik location, not stated",
+    "Delivery needed before 10:00 on 2026-10-22; confirm time window",
+    "Sand quantity is 2 tonnes, bulk bag acceptable; confirm bag size",
+    "Nails: 'a couple of boxes' taken as 2; box size not specified",
+    "Call Dana back on the site phone if any item is out of stock",
+    "Phone note only; no written order or contact details for Hollis Renovations",
+    "Contact name Dana has no surname or company role"
+  ]
+}

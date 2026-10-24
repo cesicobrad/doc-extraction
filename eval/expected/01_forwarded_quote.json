@@ -6,9 +6,15 @@
   "issue_date": "2026-09-14",
   "due_date": "2026-10-14",
   "currency": "EUR",
-  "subtotal": 2813.60,
+  "subtotal": 2813.6,
   "tax_rate": 22,
   "tax_amount": 618.99,
   "total": 3432.59,
-  "line_items.amount": [1232.00, 1255.50, 255.60, 70.50]
+  "line_items.amount": [
+    1232.0,
+    1255.5,
+    255.6,
+    70.5
+  ],
+  "_arithmetic_flagged": false
 }

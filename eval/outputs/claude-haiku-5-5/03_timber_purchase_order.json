@@ -1,0 +1,51 @@
+{
+  "document_type": "purchase_order",
+  "document_number": "HR-PO-0412",
+  "issuer": {
+    "name": "Hollis Renovations",
+    "address": "Delavska ulica 41, 1000 Ljubljana",
+    "email": "orders@hollis-renovations.example",
+    "tax_id": ""
+  },
+  "recipient": {
+    "name": "Fernhill Timber Yard",
+    "address": "Skladiscna cesta 18, 4000 Kranj",
+    "email": "",
+    "tax_id": ""
+  },
+  "issue_date": "2026-10-06",
+  "due_date": "",
+  "delivery_date": "2026-10-13",
+  "delivery_address": "Vrtna ulica 12, 1241 Kamnik",
+  "currency": "EUR",
+  "line_items": [
+    {
+      "description": "C24 kiln-dried structural timber 47 x 150 mm, 4.8 m lengths",
+      "quantity": 60.0,
+      "unit": "pcs",
+      "unit_price": 18.4,
+      "amount": 1104.0
+    },
+    {
+      "description": "OSB3 board 18 mm, 2500 x 1250",
+      "quantity": 25.0,
+      "unit": "sheets",
+      "unit_price": 21.6,
+      "amount": 540.0
+    },
+    {
+      "description": "Joist hangers 47 mm, galvanised",
+      "quantity": 120.0,
+      "unit": "pcs",
+      "unit_price": 1.35,
+      "amount": 162.0
+    }
+  ],
+  "subtotal": 1806.0,
+  "discount_amount": null,
+  "tax_rate": 22.0,
+  "tax_amount": 397.32,
+  "total": 2203.32,
+  "summary": "Hollis Renovations orders structural timber, OSB boards and joist hangers from Fernhill Timber Yard for EUR 2,203.32 including VAT, for delivery by 13 October 2026.",
+  "review_flags": []
+}
