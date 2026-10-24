@@ -10,7 +10,7 @@ from typing import Literal, Optional
 import anthropic
 from pydantic import BaseModel, Field
 
-DEFAULT_MODEL = "claude-opus-5-5"
+DEFAULT_MODEL = "claude-haiku-5-5"
 MODEL = os.environ.get("EXTRACTION_MODEL", DEFAULT_MODEL)
 # Models that accept the server-side refusal fallback ("default" form).
 FALLBACK_MODELS = {"claude-opus-5-5", "claude-sonnet-5-5", "claude-fable-5-1"}

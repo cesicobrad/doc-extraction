@@ -67,7 +67,8 @@ currency, subtotal, discount, tax rate, tax, total, line item amounts and quanti
 whether the arithmetic checks fire. They must fire on the wrong-total invoice and stay quiet
 on the other seven.
 
-Result with `claude-opus-5-5`:
+Result with the default model, `claude-haiku-5-5` (Opus and Sonnet scored the same; see
+below):
 
 ```
 01_forwarded_quote                     13/13
@@ -116,14 +117,14 @@ What the table does and doesn't show:
   the fastest despite being the smallest model. Its per-token price is low enough that it
   is still about 13× cheaper than Sonnet and 29× cheaper than Opus.
 
-**Recommendation:** `claude-haiku-5-5` as the default for this workload. On this eval it
+**Default: `claude-haiku-5-5`.** On this eval it
 matched the larger models on every field and its notes to the reviewer were as useful as
 Opus's, at about a tenth of a cent per document. The trade-off is about two seconds more
 per document than Sonnet. Haiku also has no server-side refusal fallback, and eight
 documents is too few to rule out a gap on harder real-world paperwork. So choose Sonnet
 when response time matters most, and re-run the eval on the customer's own documents
-before committing. The code currently defaults to Opus. Switch with
-`EXTRACTION_MODEL=claude-haiku-5-5` in `.env`, or pass `--model` to the eval.
+before committing. To use another model, set `EXTRACTION_MODEL=claude-sonnet-5-5` (or
+`claude-opus-5-5`) in `.env`, or pass `--model` to the eval.
 
 ## Run it
 
@@ -171,8 +172,9 @@ scripts/              regenerate the samples and the screenshots (requirements-d
   model, so a wrong total is caught even if the model copies it faithfully and says nothing.
 - **One call per document.** No agent loop is needed for this task. That keeps it fast,
   cheap and easy to reason about.
-- **Refusal fallback** is turned on for Opus and Sonnet, so a false positive from a safety
-  classifier doesn't stop a legitimate document.
+- **Refusal fallback** is turned on when Opus or Sonnet is selected, so a false positive
+  from a safety classifier doesn't stop a legitimate document. Haiku doesn't offer it; a
+  refusal there shows an error in the app, and `EXTRACTION_MODEL` can point at Sonnet instead.
 - **For production** you would add a queue for bulk inbox processing, a check for
   duplicate invoices, and an export to the accounting or ERP system instead of JSON files.
 

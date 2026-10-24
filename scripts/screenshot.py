@@ -2,7 +2,7 @@
 
 Start the app first (streamlit run app.py), then:
     pip install playwright
-    python scripts/screenshot.py [sample-name] [url]
+    python scripts/screenshot.py [sample-name] [url] [viewport-height]
 
 Uses the locally installed Microsoft Edge, so no browser download is needed.
 """
@@ -16,10 +16,11 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parent.parent
 SAMPLE = sys.argv[1] if len(sys.argv) > 1 else "02_concrete_invoice.pdf"
 URL = sys.argv[2] if len(sys.argv) > 2 else "http://localhost:8501"
+HEIGHT = int(sys.argv[3]) if len(sys.argv) > 3 else 1500
 
 with sync_playwright() as p:
     browser = p.chromium.launch(channel="msedge")
-    page = browser.new_page(viewport={"width": 1440, "height": 1500}, device_scale_factor=2)
+    page = browser.new_page(viewport={"width": 1440, "height": HEIGHT}, device_scale_factor=2)
     page.goto(URL)
     page.locator("[data-testid=stSelectbox]").click()
     page.get_by_role("option", name=SAMPLE).click()

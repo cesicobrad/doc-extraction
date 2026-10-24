@@ -4,6 +4,7 @@ import json
 
 import pytest
 
+from extractor import DEFAULT_MODEL
 from run_eval import EXPECTED, OUTPUTS, check, get, norm, same_number, score
 
 ACTUAL = {
@@ -73,4 +74,4 @@ def test_every_sample_has_expected_values_and_saved_output():
     for name in names:
         expected = json.loads((EXPECTED / f"{name}.json").read_text(encoding="utf-8"))
         assert expected, name
-        assert (OUTPUTS / "claude-opus-5-5" / f"{name}.json").exists(), name
+        assert (OUTPUTS / DEFAULT_MODEL / f"{name}.json").exists(), name
