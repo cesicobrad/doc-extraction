@@ -8,6 +8,8 @@ checks and corrects the result before anything is saved.
 
 ![Review screen: a photographed invoice with a PAID stamp on the left, extracted fields and line items on the right, with the model's notes and an Approve button](docs/screenshot.png)
 
+**Watch it:** [one-minute demo video](https://cesicobrad.github.io/assets/video/doc-extraction.mp4)
+
 ## What it does
 
 1. **Input:** pick a sample, upload a PDF, photo or scan (PNG/JPG), `.eml` or `.txt`, or
@@ -198,9 +200,6 @@ people will use it, what to check, and what to change after testing. For this de
   Opus on every field at about 1/30 of the cost, so it became the default. That was the
   biggest surprise here, and it's a real saving for a client processing hundreds of documents.
 - **A demo mode** so anyone can try it without an API key.
-
-<!-- TODO before publishing: run it on a few of your own documents and add one honest
-sentence about what happened, e.g. "I tested it on ... and ...". -->
 
 What earlier projects taught me: you start from a basic version and build it up, and only
 testing and real use show what a tool actually needs. Working with AI agents lets me make
