@@ -8,7 +8,7 @@ checks and corrects the result before anything is saved.
 
 ![Review screen: a photographed invoice with a PAID stamp on the left, extracted fields and line items on the right, with the model's notes and an Approve button](docs/screenshot.png)
 
-**Watch it:** [one-minute demo video](https://cesicobrad.github.io/assets/video/doc-extraction.mp4)
+**Watch it:** [one-minute demo video](https://obradcesic.com/assets/video/doc-extraction.mp4)
 
 ## What it does
 
